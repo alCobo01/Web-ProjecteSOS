@@ -1,0 +1,14 @@
+﻿@page
+@model Web_SOS_Code.Pages.Dishs.DishModel
+@{
+	ViewData["Title"] = "Dish Details";
+}
+
+<h2>Dish</h2>
+<div class="card">
+	<div class="card-body">
+		<h5 class="card-title">@Model.Dish.Name</h5>
+		<p class="card-text">@Model.Dish.Description</p>
+		<p class="card-text">Price: @Model.Dish.Price.ToString("C")</p>
+	</div>
+	

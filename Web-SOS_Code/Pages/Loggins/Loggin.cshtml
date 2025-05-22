@@ -1,0 +1,20 @@
+﻿@page
+@model Web_SOS_Code.Pages.Loggins.LogginModel
+@{
+	ViewData["Title"] = "Loggin";
+}
+
+<h2>Loggin</h2>
+<from method="post">
+	<div class="from-group">
+		<label asp-for="Loggin.UserName"></label>
+		<input asp-for="Loggin.UserName" class="form-control" />
+		<span asp-validation-for="Loggin.UserName" class="text-danger"></span>
+	</div>
+	<div class="from-group">
+		<label asp-for="Loggin.Password"></label>
+		<input asp-for="Loggin.Password" class="form-control" />
+		<span asp-validation-for="Loggin.Password" class="text-danger"></span>
+</from>	
+
+<a
