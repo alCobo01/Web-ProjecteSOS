@@ -1,13 +1,13 @@
 ﻿using System.Text.Json;
 using System.Text;
-using T1_PR2_Client.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Http;
+using Web_SOS_Code.Models;
 
-namespace Web_SOS_Code.Services
+namespace Web_SOS_Code.Services.Auth
 {
     public class AuthService
     {
@@ -20,7 +20,7 @@ namespace Web_SOS_Code.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<(bool Success, string Message)> Login(LoginUser loginModel)
+        public async Task<(bool Success, string Message)> Login(User loginModel)
         {
             // 1) Enviar las credenciales
             var content = new StringContent(

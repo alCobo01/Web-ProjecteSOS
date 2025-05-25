@@ -7,4 +7,8 @@
     <RootNamespace>Web_SOS_Code</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.11.0" />
+  </ItemGroup>
+
 </Project>
