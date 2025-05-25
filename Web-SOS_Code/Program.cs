@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using T1_PR2_Client.Services;
 using Web_SOS_Code.Services;
+using Web_SOS_Code.Services.Auth;
 
 namespace Web_SOS_Code
 {
@@ -26,7 +26,7 @@ namespace Web_SOS_Code
             })
                 .AddHttpMessageHandler<AuthenticationDelegatingHandler>();
 
-            builder.Services.AddScoped<GameService>();
+            builder.Services.AddScoped<IngredientService>();
 
             builder.Services.AddTransient<AuthenticationDelegatingHandler>();
             builder.Services.AddHttpClient("AuthorizedClient")

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 
-namespace Web_SOS_Code.Services
+namespace Web_SOS_Code.Services.Auth
 {
     public class AuthenticationDelegatingHandler : DelegatingHandler
     {
