@@ -20,14 +20,14 @@ namespace Web_SOS_Code.Services.Auth
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<(bool Success, string Message)> Login(User loginModel)
+        public async Task<(bool Success, string Message)> LoginAsync(User loginModel)
         {
             // 1) Enviar las credenciales
             var content = new StringContent(
                 JsonSerializer.Serialize(loginModel),
                 Encoding.UTF8,
                 "application/json");
-            var response = await _httpClient.PostAsync("api/auth/login", content);
+            var response = await _httpClient.PostAsync("auth/login", content);
             var body = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
