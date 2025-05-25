@@ -1,0 +1,55 @@
+﻿@page
+@model ListIngredientModel
+@{
+    ViewData["Title"] = "Ingreients";
+}
+
+<div class="text-center mb-4">
+    @if (Model.ApiErrorMessage != string.Empty)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            @Model.ApiErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
+
+<h2>Llista d'ingredients</h2>
+<div>
+    <a asp-page="AddIngredient" class="btn btn-primary" style="margin-bottom: 20px">Afegir ingredient</a>
+</div>
+
+@if (Model.Ingredients.Count() != 0)
+{
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th class="align-middle">Nom</th>
+                <th class="align-middle">Data de caducitat</th>
+                <th class="align-middle">Accions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ingredient in Model.Ingredients)
+            {
+                <tr>
+                    <td class="align-middle">@ingredient.Name</td>
+                    <td class="align-middle">@ingredient.ExpirationDate.Date</td>
+                    <td class="align-middle d-flex gap-2 justify-content-center">
+                        <a asp-page="EditarIngredient" asp-route-id="@ingredient.Id" class="btn btn-primary">Editar</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@ingredient.Id" onsubmit="return confirm('Estàs segur que vols eliminar aquest ingredient?');" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+<div class="alert alert-warning">
+    <p>Encara no existeix cap ingredient!</p>
+</div>
+}
