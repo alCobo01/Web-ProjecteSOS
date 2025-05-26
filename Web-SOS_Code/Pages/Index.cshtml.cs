@@ -1,19 +1,43 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Web_SOS_Code.Models;
+using Web_SOS_Code.Services.Auth;
 
 namespace Web_SOS_Code.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly AuthService _authService;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(AuthService authService)
     {
-        _logger = logger;
+        _authService = authService;
     }
+
+    [BindProperty]
+    public new User User { get; set; }
+
+    [TempData]
+    public string ErrorMessage { get; set; }
 
     public void OnGet()
     {
+        TempData.Clear();
+    }
 
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+                return Page();
+        
+        var result = await _authService.LoginAsync(User);
+        if (!result.Success)
+        {
+            ModelState.AddModelError(string.Empty, result.Message);
+            return Page();
+        }
+
+        TempData["SuccessMessage"] = "Login successful! Redirecting...";
+        return Page();
     }
 }
