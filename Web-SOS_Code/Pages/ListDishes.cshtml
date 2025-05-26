@@ -1,0 +1,91 @@
+﻿@page
+@model ListDishesModel
+@{
+    ViewData["Title"] = "Plats";
+}
+
+<div class="text-center mb-4">
+    @if (!string.IsNullOrEmpty(Model.ApiErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            @Model.ApiErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
+
+<h2>Llista de plats</h2>
+<div>
+    <a asp-page="AddDish" class="btn btn-primary" style="margin-bottom: 20px">Afegir plat</a>
+</div>
+
+@if (Model.Dishes.Count() != 0)
+{
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th class="align-middle">Nom</th>
+                <th class="align-middle">Descripció</th>
+                <th class="align-middle">Preu</th>
+                <th class="align-middle">Llista d'ingredients</th>
+                <th class="align-middle">Imatge</th>
+                <th class="align-middle">Accions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dishes in Model.Dishes)
+            {
+                <tr>
+                    <td class="align-middle">@dishes.Name</td>
+                    <td class="align-middle">@dishes.Description</td>
+                    <td class="align-middle">@dishes.Price€</td>
+                    <td class="align-middle">
+                        @if (dishes.IngredientsName != null && dishes.IngredientsName.Any())
+                        {
+                            <ul class="list-unstyled">
+                                @foreach (var ingredientName in dishes.IngredientsName)
+                                {
+                                    <li>@ingredientName</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span>No hi ha ingredients</span>
+                        }
+                    </td>
+                    <td class="align-middle">
+                        @if (!string.IsNullOrEmpty(dishes.ImageUrl))
+                        {
+                            <img src="@dishes.ImageUrl" alt="Imatge del plat" style="max-width:100px; max-height:100px;" />
+                        }
+                        else
+                        {
+                            <span>No hi ha imatge</span>
+                        }
+                    </td>
+                    <td class="align-middle d-flex gap-2 justify-content-center">
+                        <a asp-page="EditIngredient" asp-route-id="@dishes.Id" class="btn btn-primary">Editar</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@dishes.Id" onsubmit="return confirm('Estàs segur que vols eliminar aquest ingredient?');" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+<div class="alert alert-warning">
+    <p>Encara no existeix cap ingredient!</p>
+</div>
+}

@@ -45,6 +45,21 @@ namespace Web_SOS_Code.Services
             }
         }
 
+        public async Task<List<string>> GetIngredientsName()
+        {
+            var response = await _httpClient.GetAsync("ingredientname");
+            if (response.IsSuccessStatusCode)
+            {
+                var ingredientsName = await response.Content.ReadFromJsonAsync<List<string>>();
+                return ingredientsName ?? new List<string>();
+            }
+            else
+            {
+                var body = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException($"API Error ({response.StatusCode}): {body}");
+            }   
+        }
+
         public async Task<Ingredient> PostIngredientAsync(Ingredient ing)
         {
             var response = await _httpClient.PostAsJsonAsync($"ingredient", ing);

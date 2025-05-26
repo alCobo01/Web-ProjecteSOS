@@ -5,7 +5,12 @@ namespace Web_SOS_Code.Models
     public class Ingredient
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "El nom de l'ingredient és obligatori")]
         public string? Name { get; set; }
+
+        [Required(ErrorMessage = "La quantitat de l'ingredient és obligatòria")]
+        [Range(1, int.MaxValue, ErrorMessage = "La quantitat ha de ser un nombre enter positiu")]
         public int Quantity { get; set; }
 
         [DataType(DataType.Date)]
