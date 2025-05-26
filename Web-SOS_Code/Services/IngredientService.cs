@@ -1,4 +1,5 @@
 ﻿using Web_SOS_Code.Models;
+using Web_SOS_Code.Models.DTOs;
 
 namespace Web_SOS_Code.Services
 {
@@ -49,8 +50,15 @@ namespace Web_SOS_Code.Services
             var response = await _httpClient.PostAsJsonAsync($"ingredient", ing);
             if (response.IsSuccessStatusCode)
             {
-                var newIngredient = await response.Content.ReadFromJsonAsync<Ingredient>();
-                return newIngredient;
+                var ingredients = await response.Content.ReadFromJsonAsync<List<Ingredient>>();
+                if (ingredients != null && ingredients.Count > 0)
+                {
+                    return ingredients[0];
+                }
+                else
+                {
+                    throw new HttpRequestException("API returned an empty ingredient list.");
+                }
             }
             else
             {
@@ -59,7 +67,7 @@ namespace Web_SOS_Code.Services
             }
         }
 
-        public async Task<Ingredient> PutIngredientAsync(int id, Ingredient ing)
+        public async Task<Ingredient> PutIngredientAsync(int id, UpdateIngredientDTO ing)
         {
             var response = await _httpClient.PutAsJsonAsync($"ingredient/{id}", ing);
             if (response.IsSuccessStatusCode)

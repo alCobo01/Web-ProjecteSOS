@@ -1,0 +1,32 @@
+﻿@page
+@model EditIngredientModel
+@{
+    ViewData["Title"] = "Editar ingredient";
+}
+
+<div class="text-center mb-4">
+    @if (!string.IsNullOrEmpty(Model.ApiErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            @Model.ApiErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
+
+<h2>Editar ingredient</h2>
+<form method="post">
+    <input type="hidden" asp-for="Ingredient.Id" />
+    <div class="form-floating mb-3">
+        <input asp-for="Ingredient.Name" class="form-control" aria-required="true"/>
+        <label asp-for="Ingredient.Name">Nom</label>
+        <span asp-validation-for="Ingredient.Name" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Ingredient.ExpirationDate" class="form-control" aria-required="true" />
+        <label asp-for="Ingredient.ExpirationDate">Data de caducitat</label>
+        <span asp-validation-for="Ingredient.ExpirationDate" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Afegir ingredient</button>
+</form>

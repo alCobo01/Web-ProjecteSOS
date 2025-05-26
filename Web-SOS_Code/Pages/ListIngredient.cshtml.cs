@@ -18,9 +18,14 @@ public class ListIngredientModel : PageModel
 
     [TempData]
     public string? ApiErrorMessage { get; set; }
+    public bool IsAuthenticated { get; private set; }
+
 
     public async Task<IActionResult> OnGetAsync()
     {
+        IsAuthenticated = User.Identity?.IsAuthenticated ?? false;
+        if (!IsAuthenticated) return RedirectToPage("Index");
+
         try
         {
             Ingredients = await _ingredientService.GetIngredientsAsync();

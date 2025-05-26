@@ -1,15 +1,22 @@
 ﻿@page
 @model ListIngredientModel
 @{
-    ViewData["Title"] = "Ingreients";
+    ViewData["Title"] = "Ingredients";
 }
 
 <div class="text-center mb-4">
-    @if (Model.ApiErrorMessage != string.Empty)
+    @if (!string.IsNullOrEmpty(Model.ApiErrorMessage))
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="bi bi-exclamation-triangle-fill me-2"></i>
             @Model.ApiErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
@@ -37,7 +44,7 @@
                     <td class="align-middle">@ingredient.Name</td>
                     <td class="align-middle">@ingredient.ExpirationDate.Date</td>
                     <td class="align-middle d-flex gap-2 justify-content-center">
-                        <a asp-page="EditarIngredient" asp-route-id="@ingredient.Id" class="btn btn-primary">Editar</a>
+                        <a asp-page="EditIngredient" asp-route-id="@ingredient.Id" class="btn btn-primary">Editar</a>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@ingredient.Id" onsubmit="return confirm('Estàs segur que vols eliminar aquest ingredient?');" style="display:inline;">
                             <button type="submit" class="btn btn-danger">Eliminar</button>
                         </form>
