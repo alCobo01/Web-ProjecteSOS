@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Web_SOS_Code.Controllers;
 using Web_SOS_Code.Services;
 using Web_SOS_Code.Services.Auth;
 
@@ -27,6 +28,8 @@ namespace Web_SOS_Code
                 .AddHttpMessageHandler<AuthenticationDelegatingHandler>();
 
             builder.Services.AddScoped<IngredientService>();
+            builder.Services.AddScoped<DishService>();
+            builder.Services.AddScoped<MenuService>();
 
             builder.Services.AddTransient<AuthenticationDelegatingHandler>();
             builder.Services.AddHttpClient("AuthorizedClient")

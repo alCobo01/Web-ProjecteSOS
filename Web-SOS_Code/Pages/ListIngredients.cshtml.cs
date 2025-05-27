@@ -5,11 +5,11 @@ using Web_SOS_Code.Services;
 
 namespace Web_SOS_Code.Pages;
 
-public class ListIngredientModel : PageModel
+public class ListIngredientsModel : PageModel
 {
     private readonly IngredientService _ingredientService;
 
-    public ListIngredientModel(IngredientService ingredientService)
+    public ListIngredientsModel(IngredientService ingredientService)
     {
         _ingredientService = ingredientService;
     }

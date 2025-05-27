@@ -1,4 +1,5 @@
 ﻿using Web_SOS_Code.Models;
+using Web_SOS_Code.Models.DTOs;
 
 namespace Web_SOS_Code.Services
 {
@@ -59,7 +60,7 @@ namespace Web_SOS_Code.Services
             }
         }
 
-        public async Task<Dish> PutDishAsync(int id, Dish dish)
+        public async Task<Dish> PutDishAsync(int id, UpdateDishDTO dish)
         {
             var response = await _httpClient.PutAsJsonAsync($"dish/{id}", dish);
             if (response.IsSuccessStatusCode)

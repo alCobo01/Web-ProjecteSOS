@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web_SOS_Code.Models
+namespace Web_SOS_Code.Models.DTOs
 {
-    public class Dish
+    public class UpdateDishDTO
     {
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "El nom del plat és obligatori")]
         public string Name { get; set; } = string.Empty;
 
