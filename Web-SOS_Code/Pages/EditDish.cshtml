@@ -1,0 +1,56 @@
+﻿@page
+@model EditDishModel
+@{
+    ViewData["Title"] = "Editar plat";
+}
+
+<div class="text-center mb-4">
+    @if (!string.IsNullOrEmpty(Model.ApiErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            @Model.ApiErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
+
+<h2>Editar plat</h2>
+<form method="post">
+    <input type="hidden" asp-for="Dish.Id" />
+    <div class="form-floating mb-3">
+        <input asp-for="Dish.Name" class="form-control" aria-required="true" />
+        <label asp-for="Dish.Name">Nom</label>
+        <span asp-validation-for="Dish.Name" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Dish.Description" class="form-control" aria-required="true" />
+        <label asp-for="Dish.Description">Descripció</label>
+        <span asp-validation-for="Dish.Description" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Dish.Price" class="form-control" aria-required="true" />
+        <label asp-for="Dish.Price">Preu</label>
+        <span asp-validation-for="Dish.Price" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Dish.ImageUrl" class="form-control" aria-required="true" />
+        <label asp-for="Dish.ImageUrl">URL imatge</label>
+        <span asp-validation-for="Dish.ImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Ingredients</label>
+        <select asp-for="SelectedIngredientsName"
+                asp-items="Model.IngredientOptions.Options"
+                multiple
+                size="10"
+                class="form-control">
+        </select>
+        <span asp-validation-for="SelectedIngredientsName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Editar plat</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
