@@ -1,7 +1,7 @@
 ﻿@page
-@model EditIngredientModel
+@model EditDishModel
 @{
-    ViewData["Title"] = "Editar ingredient";
+    ViewData["Title"] = "Editar plat";
 }
 
 <div class="text-center mb-4">
@@ -15,20 +15,40 @@
     }
 </div>
 
-<h2>Editar ingredient</h2>
+<h2>Editar plat</h2>
 <form method="post">
-    <input type="hidden" asp-for="Ingredient.Id" />
+    <input type="hidden" asp-for="Dish.Id" />
     <div class="form-floating mb-3">
-        <input asp-for="Ingredient.Name" class="form-control" aria-required="true"/>
-        <label asp-for="Ingredient.Name">Nom</label>
-        <span asp-validation-for="Ingredient.Name" class="text-danger"></span>
+        <input asp-for="Dish.Name" class="form-control" aria-required="true" />
+        <label asp-for="Dish.Name">Nom</label>
+        <span asp-validation-for="Dish.Name" class="text-danger"></span>
     </div>
     <div class="form-floating mb-3">
-        <input asp-for="Ingredient.ExpirationDate" class="form-control" aria-required="true" />
-        <label asp-for="Ingredient.ExpirationDate">Data de caducitat</label>
-        <span asp-validation-for="Ingredient.ExpirationDate" class="text-danger"></span>
+        <input asp-for="Dish.Description" class="form-control" aria-required="true" />
+        <label asp-for="Dish.Description">Descripció</label>
+        <span asp-validation-for="Dish.Description" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Afegir ingredient</button>
+    <div class="form-floating mb-3">
+        <input asp-for="Dish.Price" class="form-control" aria-required="true" />
+        <label asp-for="Dish.Price">Preu</label>
+        <span asp-validation-for="Dish.Price" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Dish.ImageUrl" class="form-control" aria-required="true" />
+        <label asp-for="Dish.ImageUrl">URL imatge</label>
+        <span asp-validation-for="Dish.ImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Ingredients</label>
+        <select asp-for="SelectedIngredientsName"
+                asp-items="Model.IngredientOptions.Options"
+                multiple
+                size="10"
+                class="form-control">
+        </select>
+        <span asp-validation-for="SelectedIngredientsName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Editar plat</button>
 </form>
 
 @section Scripts {

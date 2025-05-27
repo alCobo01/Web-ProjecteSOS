@@ -73,7 +73,7 @@
                         }
                     </td>
                     <td class="align-middle d-flex gap-2 justify-content-center">
-                        <a asp-page="EditIngredient" asp-route-id="@dishes.Id" class="btn btn-primary">Editar</a>
+                        <a asp-page="EditDish" asp-route-id="@dishes.Id" class="btn btn-primary">Editar</a>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@dishes.Id" onsubmit="return confirm('Estàs segur que vols eliminar aquest ingredient?');" style="display:inline;">
                             <button type="submit" class="btn btn-danger">Eliminar</button>
                         </form>

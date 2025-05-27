@@ -65,15 +65,18 @@ public class EditDishModel : PageModel
 
         try
         {
-            var updateIngredient = new UpdateIngredientDTO
+            var updateDish = new UpdateDishDTO
             {
-                Name = Ingredient.Name,
-                ExpirationDate = Ingredient.ExpirationDate
+                Name = Dish.Name,
+                Description = Dish.Description,
+                ImageUrl = Dish.ImageUrl,
+                Price = Dish.Price,
+                IngredientsName = SelectedIngredientsName
             };
 
-            await _ingredientService.PutIngredientAsync(Ingredient.Id, updateIngredient);
-            TempData["SuccessMessage"] = $"Ingredient {Ingredient.Name} editat correctament!";
-            return RedirectToPage("ListIngredient");
+            await _dishService.PutDishAsync(Dish.Id, updateDish);
+            TempData["SuccessMessage"] = $"Plat {Dish.Name} editat correctament!";
+            return RedirectToPage("ListDishes");
         }
         catch (HttpRequestException ex)
         {
