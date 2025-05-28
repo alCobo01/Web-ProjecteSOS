@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 using Web_SOS_Code.Models;
 using Web_SOS_Code.Services;
 
@@ -24,7 +25,7 @@ public class ListIngredientsModel : PageModel
     public async Task<IActionResult> OnGetAsync()
     {
         IsAuthenticated = User.Identity?.IsAuthenticated ?? false;
-        if (!IsAuthenticated) return RedirectToPage("Index");
+        if (!IsAuthenticated) return RedirectToPage("Login");
 
         try
         {
@@ -59,6 +60,34 @@ public class ListIngredientsModel : PageModel
         {
             ApiErrorMessage = $"Exception calling API: {ex.Message}";
             ModelState.AddModelError(string.Empty, ApiErrorMessage);
+        }
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostJsonAsync(IFormFile JsonFile)
+    {
+        if (JsonFile == null || JsonFile.Length == 0)
+        {
+            ApiErrorMessage = "Please select a JSON file.";
+            ModelState.AddModelError(string.Empty, ApiErrorMessage);
+            return Page();
+        }
+        try
+        {
+            var added = await _ingredientService.PostIngredientsJsonAsync(JsonFile);
+            TempData["SuccessMessage"] = $"{added.Count} ingredients imported successfully.";
+        }
+        catch (HttpRequestException ex)
+        {
+            ApiErrorMessage = ex.Message;
+            ModelState.AddModelError(string.Empty, ApiErrorMessage);
+            return Page();
+        }
+        catch (Exception ex)
+        {
+            ApiErrorMessage = $"Exception calling API: {ex.Message}";
+            ModelState.AddModelError(string.Empty, ApiErrorMessage);
+            return Page();
         }
         return RedirectToPage();
     }

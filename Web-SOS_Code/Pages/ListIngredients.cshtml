@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model ListIngredientsModel
 @{
     ViewData["Title"] = "Ingredients";
@@ -24,9 +24,20 @@
 
 <h2>Llista d'ingredients</h2>
 <div>
-    <a asp-page="AddIngredient" class="btn btn-primary" style="margin-bottom: 20px">Afegir ingredient</a>
-    <a asp-page="Menu" class="btn btn-primary" style="margin-bottom: 20px">Tornar al menu</a>
+    <div class="btn-group mb-3">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Afegir ingredient
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" asp-page="AddIngredient">Manualment</a></li>
+            <li><a class="dropdown-item" href="#" id="jsonOption">JSON proveïdor</a></li>
+        </ul>
+    </div>
 </div>
+
+<form id="jsonForm" method="post" enctype="multipart/form-data" asp-page-handler="Json" style="display:none">
+    <input type="file" id="hiddenJsonFile" name="JsonFile" accept=".json" />
+</form>
 
 @if (Model.Ingredients.Count() != 0)
 {
@@ -43,7 +54,7 @@
             {
                 <tr>
                     <td class="align-middle">@ingredient.Name</td>
-                    <td class="align-middle">@ingredient.ExpirationDate.Date</td>
+                    <td class="align-middle">@ingredient.ExpirationDate.ToString("dd/MM/yyyy")</td>
                     <td class="align-middle d-flex gap-2 justify-content-center">
                         <a asp-page="EditIngredient" asp-route-id="@ingredient.Id" class="btn btn-primary">Editar</a>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@ingredient.Id" onsubmit="return confirm('Estàs segur que vols eliminar aquest ingredient?');" style="display:inline;">
@@ -60,4 +71,19 @@ else
 <div class="alert alert-warning">
     <p>Encara no existeix cap ingredient!</p>
 </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('jsonOption').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('hiddenJsonFile').click();
+        });
+        document.getElementById('hiddenJsonFile').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                document.getElementById('jsonForm').submit();
+            }
+        });
+    </script>
 }

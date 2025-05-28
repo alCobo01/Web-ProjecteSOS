@@ -52,13 +52,15 @@ public class AddDishModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid) return Page();
+        ModelState.Clear();
         Dish.IngredientsName = SelectedIngredientsName;
-
+        TryValidateModel(Dish);
+        if (!ModelState.IsValid) return Page();
+        
         try
         {
             await _dishService.PostDishAsync(Dish);
-            TempData["SuccessMessage"] = $"Ingredient {Dish.Name} afegit correctament!";
+            TempData["SuccessMessage"] = $"Plat {Dish.Name} afegit correctament!";
             return RedirectToPage("ListDishes");
         }
         catch (HttpRequestException ex)

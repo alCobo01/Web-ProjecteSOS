@@ -38,7 +38,7 @@ public class AddIngredientModel : PageModel
         {
             await _ingredientService.PostIngredientAsync(Ingredient);
             TempData["SuccessMessage"] = $"Ingredient {Ingredient.Name} afegit correctament!";
-            return RedirectToPage("ListIngredient");
+            return RedirectToPage("ListIngredients");
         }
         catch (HttpRequestException ex)
         {
