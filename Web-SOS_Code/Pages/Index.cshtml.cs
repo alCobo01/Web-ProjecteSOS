@@ -38,6 +38,11 @@ public class IndexModel : PageModel
         }
 
         TempData["SuccessMessage"] = "Login successful! Redirecting...";
+
+        //if (ModelState.IsValid)
+        //{
+        //    return RedirectToPage("/Menu");
+        //}
         return Page();
     }
 }
