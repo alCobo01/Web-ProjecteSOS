@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Web_SOS_Code.Models;
 using Web_SOS_Code.Models.DTOs;
 using Web_SOS_Code.Services;
@@ -35,7 +36,15 @@ public class EditIngredientModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid) return Page();
+        if (ModelState.TryGetValue("Ingredient.Name", out var entryName) && entryName.Errors.Count > 0)
+        {
+            return Page();
+        }
+
+        if (ModelState.TryGetValue("Ingredient.ExpirationDate", out var entryExpirationDate) && entryExpirationDate.Errors.Count > 0)
+        {
+            return Page();
+        }
 
         try
         {
@@ -47,7 +56,7 @@ public class EditIngredientModel : PageModel
 
             await _ingredientService.PutIngredientAsync(Ingredient.Id, updateIngredient);
             TempData["SuccessMessage"] = $"Ingredient {Ingredient.Name} editat correctament!";
-            return RedirectToPage("ListIngredient");
+            return RedirectToPage("ListIngredients");
         }
         catch (HttpRequestException ex)
         {

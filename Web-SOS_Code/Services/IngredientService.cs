@@ -1,4 +1,4 @@
-﻿using Web_SOS_Code.Models;
+using Web_SOS_Code.Models;
 using Web_SOS_Code.Models.DTOs;
 
 namespace Web_SOS_Code.Services
@@ -80,6 +80,31 @@ namespace Web_SOS_Code.Services
                 var body = await response.Content.ReadAsStringAsync();
                 throw new HttpRequestException($"API Error ({response.StatusCode}): {body}");
             }
+        }
+
+        public async Task<IList<Ingredient>> PostIngredientsJsonAsync(IFormFile jsonFile)
+        {
+            if (jsonFile == null || jsonFile.Length == 0)
+            {
+                throw new ArgumentException("The JSON file cannot be null or empty.", nameof(jsonFile));
+            }
+            using var content = new MultipartFormDataContent();
+            using var fileStream = jsonFile.OpenReadStream();
+            using var streamContent = new StreamContent(fileStream);
+            streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            content.Add(streamContent, "jsonFile", jsonFile.FileName);
+            var response = await _httpClient.PostAsync("json", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var ingredients = await response.Content.ReadFromJsonAsync<List<Ingredient>>();
+                return ingredients ?? new List<Ingredient>();
+            }
+            else
+            {
+                var body = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException($"API Error ({response.StatusCode}): {body}");
+            }
+
         }
 
         public async Task<Ingredient> PutIngredientAsync(int id, UpdateIngredientDTO ing)
