@@ -20,9 +20,16 @@ public class IndexModel : PageModel
     [TempData]
     public string ErrorMessage { get; set; }
 
-    public void OnGet()
+    public bool IsAuthenticated { get; private set; }
+
+    public IActionResult OnGet()
     {
+        IsAuthenticated = HttpContext.User.Identity?.IsAuthenticated ?? false;
+        if (IsAuthenticated)
+            return RedirectToPage("ListDishes");
+
         TempData.Clear();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -38,11 +45,6 @@ public class IndexModel : PageModel
         }
 
         TempData["SuccessMessage"] = "Login successful! Redirecting...";
-
-        //if (ModelState.IsValid)
-        //{
-        //    return RedirectToPage("/Menu");
-        //}
         return Page();
     }
 }

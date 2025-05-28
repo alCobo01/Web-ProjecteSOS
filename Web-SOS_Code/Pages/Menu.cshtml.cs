@@ -7,37 +7,14 @@ namespace Web_SOS_Code.Pages;
 
 public class MenuModel : PageModel
 {
-    //private readonly AuthService _authService;
+    public bool IsAuthenticated { get; set; }
 
-    //public IndexModel(AuthService authService)
-    //{
-    //    _authService = authService;
-    //}
+    public IActionResult OnGet()
+    {
+        IsAuthenticated = HttpContext.User.Identity?.IsAuthenticated ?? false;
+        if (!IsAuthenticated)
+            return RedirectToPage("Index");
 
-    //[BindProperty]
-    //public new User User { get; set; }
-
-    //[TempData]
-    //public string ErrorMessage { get; set; }
-
-    //public void OnGet()
-    //{
-    //    TempData.Clear();
-    //}
-
-    //public async Task<IActionResult> OnPostAsync()
-    //{
-    //    if (!ModelState.IsValid)
-    //            return Page();
-        
-    //    var result = await _authService.LoginAsync(User);
-    //    if (!result.Success)
-    //    {
-    //        ModelState.AddModelError(string.Empty, result.Message);
-    //        return Page();
-    //    }
-
-    //    TempData["SuccessMessage"] = "Login successful! Redirecting...";
-    //    return Page();
-    //}
+        return Page();
+    }
 }
