@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Web_SOS_Code.Models;
@@ -61,6 +61,9 @@ public class EditDishModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        ModelState.Clear();
+        Dish.IngredientsName = SelectedIngredientsName;
+        TryValidateModel(Dish);
         if (!ModelState.IsValid) return Page();
 
         try

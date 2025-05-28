@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Web_SOS_Code.Controllers;
 using Web_SOS_Code.Services;
 using Web_SOS_Code.Services.Auth;
@@ -79,7 +79,7 @@ namespace Web_SOS_Code
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();

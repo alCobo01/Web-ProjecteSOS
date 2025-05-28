@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model ListDishesModel
 @{
     ViewData["Title"] = "Plats";
@@ -25,7 +25,6 @@
 <h2>Llista de plats</h2>
 <div>
     <a asp-page="AddDish" class="btn btn-primary" style="margin-bottom: 20px">Afegir plat</a>
-    <a asp-page="Menu" class="btn btn-primary" style="margin-bottom: 20px">Tornar al menu</a>
 </div>
 
 @if (Model.Dishes.Count() != 0)
@@ -37,8 +36,7 @@
                 <th class="align-middle">Descripció</th>
                 <th class="align-middle">Preu</th>
                 <th class="align-middle">Llista d'ingredients</th>
-                <th class="align-middle">Imatge</th>
-                <th class="align-middle">Accions</th>
+                <th class="align-middle">Imatge y accions</th>
             </tr>
         </thead>
         <tbody>
@@ -63,19 +61,19 @@
                             <span>No hi ha ingredients</span>
                         }
                     </td>
-                    <td class="align-middle">
+                    <td class="align-middle d-flex align-items-center justify-content-center">
                         @if (!string.IsNullOrEmpty(dishes.ImageUrl))
                         {
-                            <img src="@dishes.ImageUrl" alt="Imatge del plat" style="max-width:100px; max-height:100px;" />
+                            <img src="@dishes.ImageUrl" alt="Imatge del plat" class="img-fluid img-thumbnail" style="max-width:100px; max-height:100px;" />
                         }
                         else
                         {
                             <span>No hi ha imatge</span>
                         }
                     </td>
-                    <td class="align-middle d-flex gap-2 justify-content-center">
+                    <td class="align-middle d-flex align-items-center gap-2 justify-content-center">
                         <a asp-page="EditDish" asp-route-id="@dishes.Id" class="btn btn-primary">Editar</a>
-                        <form method="post" asp-page-handler="Delete" asp-route-id="@dishes.Id" onsubmit="return confirm('Estàs segur que vols eliminar aquest ingredient?');" style="display:inline;">
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@dishes.Id" onsubmit="return confirm('Estàs segur que vols eliminar aquest plat?');" style="display:inline;">
                             <button type="submit" class="btn btn-danger">Eliminar</button>
                         </form>
                     </td>
@@ -87,6 +85,6 @@
 else
 {
 <div class="alert alert-warning">
-    <p>Encara no existeix cap ingredient!</p>
+    <p>Encara no existeix cap plat!</p>
 </div>
 }

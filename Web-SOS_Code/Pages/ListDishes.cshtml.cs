@@ -24,7 +24,7 @@ public class ListDishesModel : PageModel
     public async Task<IActionResult> OnGetAsync()
     {
         IsAuthenticated = User.Identity?.IsAuthenticated ?? false;
-        if (!IsAuthenticated) return RedirectToPage("Index");
+        if (!IsAuthenticated) return RedirectToPage("Login");
 
         try
         {
