@@ -43,8 +43,8 @@ public class LoginModel : PageModel
             ModelState.AddModelError(string.Empty, result.Message);
             return Page();
         }
+        TempData["SuccessMessage"] = "Inici de sessió correcte! Redirigint...";
 
-        TempData["SuccessMessage"] = "Login successful! Redirecting...";
         return Page();
     }
 }
