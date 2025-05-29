@@ -75,7 +75,7 @@ public class ListIngredientsModel : PageModel
         try
         {
             var added = await _ingredientService.PostIngredientsJsonAsync(JsonFile);
-            TempData["SuccessMessage"] = $"{added.Count} ingredients imported successfully.";
+            TempData["SuccessMessage"] = $"{added.Count} type of ingredients imported successfully.";
         }
         catch (HttpRequestException ex)
         {
